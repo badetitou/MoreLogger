@@ -38,23 +38,17 @@ MoreOpenTerminalVisitor >> visitWindows: aPlatform [
     Param([Parameter(Position=0)]
     [String]$LogEntry)
 
-    process {
-'.
+    process {'.
 			 (moreFileLogger categoriesByName reject: [ :category | 
 				  category color isNil ]) withIndexDo: [ :category :index | 
 				 stream
-					 << '        ';
-					 << (index = 1
-							  ifTrue: [ 'if' ]
-							  ifFalse: [ 'elseif' ]);
-					 << ' ($LogEntry.Contains(''';
+					 << 'if($LogEntry.Contains(''';
 					 << category name;
 					 << ''')) {Return ''';
 					 << category color name;
-					 << '''}';
-					 << String crlf ].
+					 << '''}' ].
 			 stream
-				 << '        else {Return ''White''}
+				 << 'Return ''White''
     }
 }; Get-Content -wait ';
 				 << moreFileLogger fileReference pathString;
