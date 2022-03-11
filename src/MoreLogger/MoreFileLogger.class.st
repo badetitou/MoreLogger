@@ -17,6 +17,12 @@ MoreFileLogger >> addRecordCategory: aMoreRecordCategory [
 	categoriesByName at: aMoreRecordCategory name put: aMoreRecordCategory
 ]
 
+{ #category : #accessing }
+MoreFileLogger >> categoriesByName [
+
+	^ categoriesByName
+]
+
 { #category : #initialization }
 MoreFileLogger >> initialize [
 

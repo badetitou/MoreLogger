@@ -31,15 +31,34 @@ MoreOpenTerminalVisitor >> moreFileLogger: anObject [
 { #category : #accessing }
 MoreOpenTerminalVisitor >> visitWindows: aPlatform [
 
-	LibC runCommand: 'start powershell -noexit -noprofil -command "& { function Get-LogColor {
+	self halt.
+	LibC runCommand: (String streamContents: [ :stream | 
+			 stream
+			 <<
+				 'start powershell -noexit -noprofil -command "& { function Get-LogColor {
     Param([Parameter(Position=0)]
     [String]$LogEntry)
 
     process {
-        if ($LogEntry.Contains(''info'')) {Return ''Green''}
-        if ($LogEntry.Contains(''debug'')) {Return ''yellow''}
-        if ($LogEntry.Contains(''error'')) {Return ''red''}
-        else {Return ''White''}
+'.
+			 (moreFileLogger categoriesByName reject: [ :category | 
+				  category color isNil ]) withIndexDo: [ :category :index | 
+				 stream
+					 << '        ';
+					 << (index = 1
+							  ifTrue: [ 'if' ]
+							  ifFalse: [ 'elseif' ]);
+					 << ' ($LogEntry.Contains(''';
+					 << category name;
+					 << ''')) {Return ''';
+					 << category color name;
+					 << '''}';
+					 << String crlf ].
+			 stream
+				 << '        else {Return ''White''}
     }
-}; Get-Content -wait ', moreFileLogger fileReference pathString , '| ForEach {Write-Host -ForegroundColor (Get-LogColor $_) $_} }"'
+}; Get-Content -wait ';
+				 << moreFileLogger fileReference pathString;
+				 <<
+					 ' | ForEach {Write-Host -ForegroundColor (Get-LogColor $_) $_} }"' ])
 ]
