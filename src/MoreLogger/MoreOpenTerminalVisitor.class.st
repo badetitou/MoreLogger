@@ -31,7 +31,6 @@ MoreOpenTerminalVisitor >> moreFileLogger: anObject [
 { #category : #accessing }
 MoreOpenTerminalVisitor >> visitWindows: aPlatform [
 
-	self halt.
 	LibC runCommand: (String streamContents: [ :stream | 
 			 stream
 			 <<
