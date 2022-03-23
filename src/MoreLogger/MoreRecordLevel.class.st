@@ -32,7 +32,7 @@ MoreRecordLevel class >> errorLevel [
 	^ existingLevels at: #error ifAbsentPut: [ 
 		  self new
 			  name: #error;
-			  color: Color yellow;
+			  color: Color red;
 			  level: 300;
 			  yourself ]
 ]
@@ -48,8 +48,8 @@ MoreRecordLevel class >> fatalLevel [
 
 	^ existingLevels at: #fatal ifAbsentPut: [ 
 		  self new
-			  name: #error;
-			  color: Color yellow;
+			  name: #fatal;
+			  color: Color red;
 			  level: 400;
 			  yourself ]
 ]
