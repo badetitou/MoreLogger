@@ -5,35 +5,25 @@ Class {
 	#name : #MoreFileLogger,
 	#superclass : #TinyFileLogger,
 	#instVars : [
-		'categoriesByName',
-		'moreWritePrefix',
-		'moreWriteSuffix'
+		'existingLevels',
+		'moreWritePrefix'
 	],
 	#category : #MoreLogger
 }
 
-{ #category : #acccessing }
-MoreFileLogger >> addRecordCategory: aMoreRecordCategory [
-	categoriesByName at: aMoreRecordCategory name put: aMoreRecordCategory
-]
-
 { #category : #accessing }
-MoreFileLogger >> categoriesByName [
+MoreFileLogger >> existingLevels [
 
-	^ categoriesByName
+	^ existingLevels
 ]
 
 { #category : #initialization }
 MoreFileLogger >> initialize [
 
 	super initialize.
-	categoriesByName := Dictionary new.
-	moreWriteSuffix := MoreWriteSuffixVisitor new.
+	existingLevels := MoreRecordLevel existingLevels.
 	moreWritePrefix := MoreWritePrefixVisitor new.
-	MoreRecordCategory allSubclassesDo: [ :subclass | 
-		| category |
-		category := subclass new.
-		categoriesByName at: category name put: category ]
+
 ]
 
 { #category : #acccessing }
@@ -42,30 +32,27 @@ MoreFileLogger >> open [
 ]
 
 { #category : #logging }
-MoreFileLogger >> record: aString [
-	self record: aString withCategory: (categoriesByName at: #no)
-]
-
-{ #category : #logging }
-MoreFileLogger >> record: aString withCategory: aRecordCategory [
+MoreFileLogger >> record: aMoreLog [
 
 	self fileStreamDo: [ :aStream | 
-		aStream << (moreWritePrefix prefixFor: aRecordCategory).
-		self record: aString on: aStream ]
+		aStream << (moreWritePrefix prefixFor: aMoreLog asMoreLog level).
+		self record: aMoreLog asMoreLog logString on: aStream ]
 ]
 
 { #category : #logging }
 MoreFileLogger >> recordDebug: aString [
-	self record: aString withCategory: (categoriesByName at: #debug)
+
+	self record: (MoreLog logOf: aString at: MoreRecordLevel debugLevel)
 ]
 
 { #category : #logging }
 MoreFileLogger >> recordError: aString [
 
-	self record: aString withCategory: (categoriesByName at: #error)
+	self record: (MoreLog logOf: aString at: MoreRecordLevel errorLevel)
 ]
 
 { #category : #logging }
 MoreFileLogger >> recordInfo: aString [
-	self record: aString withCategory: (categoriesByName at: #info)
+
+	self record: (MoreLog logOf: aString at: MoreRecordLevel infoLevel)
 ]

@@ -1,6 +1,11 @@
 Extension { #name : #Object }
 
 { #category : #'*MoreLogger' }
+Object >> asMoreLog [
+	^ MoreLog logOf: self at: MoreRecordLevel infoLevel
+]
+
+{ #category : #'*MoreLogger' }
 Object >> recordDebug [
 	self recordDebug: self asString
 ]

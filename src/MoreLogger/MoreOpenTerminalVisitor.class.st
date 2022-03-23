@@ -39,13 +39,13 @@ MoreOpenTerminalVisitor >> visitWindows: aPlatform [
     [String]$LogEntry)
 
     process {'.
-			 (moreFileLogger categoriesByName reject: [ :category | 
-				  category color isNil ]) withIndexDo: [ :category :index | 
+			 (moreFileLogger existingLevels reject: [ :levels | 
+				  levels color isNil ]) withIndexDo: [ :level :index | 
 				 stream
 					 << 'if($LogEntry.Contains(''';
-					 << category name;
+					 << level name;
 					 << ''')) {Return ''';
-					 << category color name;
+					 << level color name;
 					 << '''}' ].
 			 stream
 				 << 'Return ''White''
