@@ -13,6 +13,24 @@ Metacello new
 
 ## Basic Usage
 
+### Creation
+
 ```st
 TinyLogger default addMoreFileLoggerNamed: 'D:/my.log'.
+```
+
+### Log something
+
+```st
+'default' record. "record as info"
+'default info' recordInfo. "record as info"
+'default debug' recordDebug. "record as debug"
+'default error' recordError. "record as error"
+```
+
+### Open terminal
+
+```
+logger := TinyLogger default addMoreFileLoggerNamed: 'D:/csn-evol.log'.
+logger open
 ```
