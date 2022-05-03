@@ -16,7 +16,7 @@ Metacello new
 ### Creation
 
 ```st
-TinyLogger default ensureFileLoggerNamed: 'D:/my.log'.
+TinyLogger default ensureMoreFileLoggerNamed: 'D:/my.log'.
 ```
 
 ### Log something
@@ -31,6 +31,6 @@ TinyLogger default ensureFileLoggerNamed: 'D:/my.log'.
 ### Open terminal
 
 ```st
-logger := TinyLogger default ensureFileLoggerNamed: 'D:/csn-evol.log'.
+logger := TinyLogger default ensureMoreFileLoggerNamed: 'D:/csn-evol.log'.
 logger open
 ```
