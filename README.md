@@ -30,7 +30,7 @@ TinyLogger default addMoreFileLoggerNamed: 'D:/my.log'.
 
 ### Open terminal
 
-```
+```st
 logger := TinyLogger default addMoreFileLoggerNamed: 'D:/csn-evol.log'.
 logger open
 ```
