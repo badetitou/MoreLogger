@@ -9,5 +9,13 @@ TinyLogger >> allLogger [
 		  addColumn: (SpStringTableColumn
 				   title: 'Kind'
 				   evaluated: [ :leafLogger | leafLogger class name ]);
+		  addColumn: (SpLinkTableColumn
+				   title: 'Open'
+				   evaluated: [ :anObject | 'Open' ]
+				   action: [ :leafLogger | 
+					   (leafLogger isKindOf: MoreFileLogger)
+						   ifTrue: [ leafLogger open ]
+						   ifFalse: [ 
+							   UIManager default alert: 'Only More Logger can be openned' ] ]);
 		  yourself
 ]

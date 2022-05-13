@@ -10,6 +10,8 @@ Class {
 { #category : #'as yet unclassified' }
 MoreOpenTerminalVisitor class >> openTerminalForMoreLogger: aMoreLogger [
 
+	aMoreLogger fileReference ensureCreateFile.
+
 	^ self new
 		  moreFileLogger: aMoreLogger;
 		  visit;
