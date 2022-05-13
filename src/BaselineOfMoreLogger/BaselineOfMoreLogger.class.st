@@ -28,5 +28,6 @@ BaselineOfMoreLogger >> defineGroups: spec [
 { #category : #baselines }
 BaselineOfMoreLogger >> definePackages: spec [
 
-	spec package: 'MoreLogger' with: [ spec requires: #( 'TinyLogger' ) ]
+	spec package: 'MoreLogger' with: [ spec requires: #( 'TinyLogger' ) ].
+	spec package: 'MoreLogger-Extension' with: [ spec requires: #( 'MoreLogger' ) ]
 ]
