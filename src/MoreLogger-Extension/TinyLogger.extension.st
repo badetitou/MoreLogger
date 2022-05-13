@@ -9,6 +9,11 @@ TinyLogger >> allLogger [
 		  addColumn: (SpStringTableColumn
 				   title: 'Kind'
 				   evaluated: [ :leafLogger | leafLogger class name ]);
+		  addColumn:
+			  (SpStringTableColumn title: 'Path' evaluated: [ :leafLogger | 
+					   (leafLogger isKindOf: TinyFileLogger)
+						   ifTrue: [ leafLogger fileReference pathString ]
+						   ifFalse: [ '' ] ]);
 		  addColumn: (SpLinkTableColumn
 				   title: 'Open'
 				   evaluated: [ :anObject | 'Open' ]
@@ -18,4 +23,16 @@ TinyLogger >> allLogger [
 						   ifFalse: [ 
 							   UIManager default alert: 'Only More Logger can be openned' ] ]);
 		  yourself
+]
+
+{ #category : #'*MoreLogger-Extension' }
+TinyLogger class >> worldMenuSectionsOn: aBuilder [
+
+	<worldMenu>
+	(aBuilder item: #Loggers)
+		parent: #Tools;
+		action: [ TinyLogger default inspect ];
+		help: 'Manage image loggers';
+		iconName: #smallDoIt;
+		order: 1000
 ]
