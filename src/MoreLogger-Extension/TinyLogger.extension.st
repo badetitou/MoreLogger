@@ -15,11 +15,20 @@ TinyLogger >> allLogger [
 						   ifTrue: [ leafLogger fileReference pathString ]
 						   ifFalse: [ '' ] ]);
 		  addColumn: (SpLinkTableColumn
+				   title: 'Clear logs'
+				   evaluated: [ :anObject | 'Clear' ]
+				   action: [ :leafLogger | 
+					   (leafLogger isKindOf: TinyFileLogger)
+						   ifTrue: [ leafLogger clearLog ]
+						   ifFalse: [ 
+							   UIManager default alert: 'Only File Logger can be cleared' ] ]);
+		  addColumn: (SpLinkTableColumn
 				   title: 'Open'
 				   evaluated: [ :anObject | 'Open' ]
 				   action: [ :leafLogger | 
 					   (leafLogger isKindOf: MoreFileLogger)
-						   ifTrue: [ leafLogger open ]
+						   ifTrue: [ leafLogger open.
+							  UIManager default alert: 'Cleared'  ]
 						   ifFalse: [ 
 							   UIManager default alert: 'Only More Logger can be openned' ] ]);
 		  yourself
