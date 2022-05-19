@@ -19,7 +19,9 @@ TinyLogger >> allLogger [
 				   evaluated: [ :anObject | 'Clear' ]
 				   action: [ :leafLogger | 
 					   (leafLogger isKindOf: TinyFileLogger)
-						   ifTrue: [ leafLogger clearLog ]
+						   ifTrue: [ 
+							   leafLogger clearLog.
+							   UIManager default inform: 'Cleared' ]
 						   ifFalse: [ 
 							   UIManager default alert: 'Only File Logger can be cleared' ] ]);
 		  addColumn: (SpLinkTableColumn
@@ -27,8 +29,7 @@ TinyLogger >> allLogger [
 				   evaluated: [ :anObject | 'Open' ]
 				   action: [ :leafLogger | 
 					   (leafLogger isKindOf: MoreFileLogger)
-						   ifTrue: [ leafLogger open.
-							  UIManager default alert: 'Cleared'  ]
+						   ifTrue: [ leafLogger open ]
 						   ifFalse: [ 
 							   UIManager default alert: 'Only More Logger can be openned' ] ]);
 		  yourself
