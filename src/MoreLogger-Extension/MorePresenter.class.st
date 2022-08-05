@@ -3,7 +3,8 @@ Class {
 	#superclass : #SpPresenter,
 	#instVars : [
 		'menu',
-		'table'
+		'table',
+		'tinyLogger'
 	],
 	#category : #'MoreLogger-Extension-Manifest'
 }
@@ -39,7 +40,6 @@ MorePresenter >> defaultLayout [
 { #category : #layout }
 MorePresenter >> initializePresenters [
 
-	| tinyLogger |
 	tinyLogger := TinyLogger default.
 	menu := SpMenuBarPresenter new
 		        addGroup: [ :group | 
@@ -48,10 +48,20 @@ MorePresenter >> initializePresenters [
 						        name: nil;
 						        description: 'Create Logger';
 						        icon: (self iconNamed: #add);
-						        action: [ self inform: 'Create new logger' ] ] ];
+						        action: [ 
+							        | chosenFile |
+							        chosenFile := UIManager default
+								                      chooseExistingFileReference:
+									                      'Select log file'
+								                      extensions:
+									                      { 'log' } asOrderedCollection
+								                      path: FileLocator home asPath.
+							        chosenFile ifNotNil: [ 
+									        tinyLogger ensureMoreFileLoggerNamed:
+											        chosenFile pathString.
+									        self refreshTable ] ] ] ];
 		        yourself.
 	table := SpTablePresenter new
-		         items: tinyLogger loggers;
 		         addColumn: (SpStringTableColumn
 				          title: 'Kind'
 				          evaluated: [ :leafLogger | leafLogger class name ]);
@@ -82,7 +92,19 @@ MorePresenter >> initializePresenters [
 						          ifFalse: [ 
 							          UIManager default alert:
 									          'Only More Logger can be openned' ] ]);
-		         yourself
+		         addColumn: (SpLinkTableColumn
+				          title: 'Remove'
+				          evaluated: [ :anObject | 'Remove' ]
+				          action: [ :leafLogger | 
+					          tinyLogger removeLogger: leafLogger.
+					          self refreshTable ]);
+		         yourself.
+	self refreshTable
+]
+
+{ #category : #layout }
+MorePresenter >> refreshTable [
+	 table items: tinyLogger loggers
 ]
 
 { #category : #layout }
