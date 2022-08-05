@@ -34,9 +34,12 @@ MoreFileLogger >> open [
 { #category : #logging }
 MoreFileLogger >> record: aMoreLog [
 
+	[ 
 	self fileStreamDo: [ :aStream | 
 		aStream << (moreWritePrefix prefixFor: aMoreLog asMoreLog level).
-		self record: aMoreLog asMoreLog logString on: aStream ]
+		self record: aMoreLog asMoreLog logString on: aStream ] ]
+		on: CannotDeleteFileException
+		do: [ :err | err pass ]
 ]
 
 { #category : #logging }
