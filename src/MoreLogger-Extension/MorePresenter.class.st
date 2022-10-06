@@ -51,7 +51,7 @@ MorePresenter >> initializePresenters [
 						        action: [ 
 							        | chosenFile |
 							        chosenFile := UIManager default
-								                      chooseExistingFileReference:
+								                      chooseForSaveFileReference:
 									                      'Select log file'
 								                      extensions:
 									                      { 'log' } asOrderedCollection
