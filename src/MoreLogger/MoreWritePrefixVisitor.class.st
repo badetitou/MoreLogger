@@ -15,6 +15,12 @@ MoreWritePrefixVisitor >> prefixFor: aLevel [
 ]
 
 { #category : #visiting }
+MoreWritePrefixVisitor >> visitGeneric: aPlatform [
+
+	^ ''
+]
+
+{ #category : #visiting }
 MoreWritePrefixVisitor >> visitWindows: aPlatform [
 	^ level name, '|'
 ]
