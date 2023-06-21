@@ -32,7 +32,6 @@ MoreOpenTerminalVisitor >> moreFileLogger: anObject [
 
 { #category : #accessing }
 MoreOpenTerminalVisitor >> visitWindows: aPlatform [
-
 	LibC runCommand: (String streamContents: [ :stream | 
 			 stream
 			 <<
@@ -52,8 +51,8 @@ MoreOpenTerminalVisitor >> visitWindows: aPlatform [
 			 stream
 				 << 'Return ''White''
     }
-}; Get-Content -wait ';
+}; Get-Content -wait ''';
 				 << moreFileLogger fileReference pathString;
 				 <<
-					 ' | ForEach {Write-Host -ForegroundColor (Get-LogColor $_) $_} }"' ])
+					 ''' | ForEach {Write-Host -ForegroundColor (Get-LogColor $_) $_} }"' ])
 ]
