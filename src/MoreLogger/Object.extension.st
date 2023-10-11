@@ -34,3 +34,9 @@ Object >> recordInfo [
 Object >> recordInfo: aString [
 	TinyCurrentLogger value recordInfo: aString
 ]
+
+{ #category : #'*MoreLogger' }
+Object >> trace: anObject [
+
+	anObject asString recordInfo
+]
