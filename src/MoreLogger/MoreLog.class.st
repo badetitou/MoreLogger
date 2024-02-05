@@ -56,7 +56,7 @@ MoreLog >> level: anObject [
 
 { #category : #accessing }
 MoreLog >> logString [
-	^ object printString
+	^ object fullPrintString
 ]
 
 { #category : #accessing }
