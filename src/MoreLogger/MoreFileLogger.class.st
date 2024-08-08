@@ -36,7 +36,7 @@ MoreFileLogger >> initialize [
 	super initialize.
 	existingLevels := MoreRecordLevel existingLevels.
 	moreWritePrefix := MoreWritePrefixVisitor new.
-	self maxLevel: MoreRecordLevel debugLevel level 
+	self maxLevel: MoreRecordLevel infoLevel level
 
 ]
 
