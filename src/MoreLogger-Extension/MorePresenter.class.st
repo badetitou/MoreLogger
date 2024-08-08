@@ -37,18 +37,18 @@ MorePresenter >> defaultLayout [
 		  yourself
 ]
 
-{ #category : #layout }
+{ #category : #initialization }
 MorePresenter >> initializePresenters [
 
 	tinyLogger := TinyLogger default.
 	menu := SpMenuBarPresenter new
-		        addGroup: [ :group | 
-			        group addItem: [ :item | 
+		        addGroup: [ :group |
+			        group addItem: [ :item |
 					        item
 						        name: nil;
 						        description: 'Create Logger';
 						        icon: (self iconNamed: #add);
-						        action: [ 
+						        action: [
 							        | chosenFile |
 							        chosenFile := UIManager default
 								                      chooseForSaveFileReference:
@@ -56,7 +56,7 @@ MorePresenter >> initializePresenters [
 								                      extensions:
 									                      { 'log' } asOrderedCollection
 								                      path: FileLocator home asPath.
-							        chosenFile ifNotNil: [ 
+							        chosenFile ifNotNil: [
 									        tinyLogger ensureMoreFileLoggerNamed:
 											        chosenFile pathString.
 									        self refreshTable ] ] ] ];
@@ -68,34 +68,51 @@ MorePresenter >> initializePresenters [
 		         addColumn:
 			         (SpStringTableColumn
 				          title: 'Path'
-				          evaluated: [ :leafLogger | 
+				          evaluated: [ :leafLogger |
 					          (leafLogger isKindOf: TinyFileLogger)
 						          ifTrue: [ leafLogger fileReference pathString ]
 						          ifFalse: [ '' ] ]);
+		         addColumn:
+			         ((SpDropListTableColumn
+				           title: 'Level'
+				           evaluated: [ :leafLogger |
+					           (leafLogger isKindOf: MoreFileLogger)
+						           ifTrue: [
+							           leafLogger existingLevels values sorted: [ :a :b |
+									           (a level - leafLogger maxLevel) abs
+									           < (b level - leafLogger maxLevel) abs ] ]
+						           ifFalse: [ {  } ] ])
+				          display: [ :level |
+					          (level isKindOf: MoreRecordLevel)
+						          ifTrue: [ level name ]
+						          ifFalse: [ 'not available' ] ];
+				          selectedItemChangedAction: [ :logger :level |
+					          logger maxLevel: level level ];
+				          yourself);
 		         addColumn: (SpLinkTableColumn
 				          title: 'Clear logs'
 				          evaluated: [ :anObject | 'Clear' ]
-				          action: [ :leafLogger | 
+				          action: [ :leafLogger |
 					          (leafLogger isKindOf: TinyFileLogger)
-						          ifTrue: [ 
+						          ifTrue: [
 							          leafLogger clearLog.
 							          UIManager default inform: 'Cleared' ]
-						          ifFalse: [ 
-							          UIManager default alert:
-									          'Only File Logger can be cleared' ] ]);
+						          ifFalse: [
+						          UIManager default alert:
+							          'Only File Logger can be cleared' ] ]);
 		         addColumn: (SpLinkTableColumn
 				          title: 'Open'
 				          evaluated: [ :anObject | 'Open' ]
-				          action: [ :leafLogger | 
+				          action: [ :leafLogger |
 					          (leafLogger isKindOf: MoreFileLogger)
 						          ifTrue: [ leafLogger open ]
-						          ifFalse: [ 
-							          UIManager default alert:
-									          'Only More Logger can be openned' ] ]);
+						          ifFalse: [
+						          UIManager default alert:
+							          'Only More Logger can be openned' ] ]);
 		         addColumn: (SpLinkTableColumn
 				          title: 'Remove'
 				          evaluated: [ :anObject | 'Remove' ]
-				          action: [ :leafLogger | 
+				          action: [ :leafLogger |
 					          tinyLogger removeLogger: leafLogger.
 					          self refreshTable ]);
 		         yourself.
