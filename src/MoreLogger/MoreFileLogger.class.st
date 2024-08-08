@@ -6,7 +6,8 @@ Class {
 	#superclass : #TinyFileLogger,
 	#instVars : [
 		'existingLevels',
-		'moreWritePrefix'
+		'moreWritePrefix',
+		'maxLevel'
 	],
 	#category : #MoreLogger
 }
@@ -35,7 +36,20 @@ MoreFileLogger >> initialize [
 	super initialize.
 	existingLevels := MoreRecordLevel existingLevels.
 	moreWritePrefix := MoreWritePrefixVisitor new.
+	self maxLevel: MoreRecordLevel debugLevel level 
 
+]
+
+{ #category : #accessing }
+MoreFileLogger >> maxLevel [
+
+	^ maxLevel
+]
+
+{ #category : #accessing }
+MoreFileLogger >> maxLevel: anObject [
+
+	maxLevel := anObject
 ]
 
 { #category : #acccessing }
@@ -46,12 +60,13 @@ MoreFileLogger >> open [
 { #category : #logging }
 MoreFileLogger >> record: aMoreLog [
 
-	[ 
-	self fileStreamDo: [ :aStream | 
-		aStream << (moreWritePrefix prefixFor: aMoreLog asMoreLog level).
-		self record: aMoreLog asMoreLog logString on: aStream ] ]
-		on: CannotDeleteFileException, PrimitiveFailed
-		do: [ :err | err retry ]
+	aMoreLog level level >= self maxLevel ifTrue: [
+		[
+		self fileStreamDo: [ :aStream |
+			aStream << (moreWritePrefix prefixFor: aMoreLog asMoreLog level).
+			self record: aMoreLog asMoreLog logString on: aStream ] ]
+			on: CannotDeleteFileException , PrimitiveFailed
+			do: [ :err | err retry ] ]
 ]
 
 { #category : #logging }

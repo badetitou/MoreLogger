@@ -12,6 +12,7 @@ Object >> recordDebug [
 
 { #category : #'*MoreLogger' }
 Object >> recordDebug: aString [
+
 	TinyCurrentLogger value recordDebug: aString
 ]
 
