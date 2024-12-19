@@ -1,26 +1,27 @@
 Class {
-	#name : #MoreWritePrefixVisitor,
-	#superclass : #OSPlatformVisitor,
+	#name : 'MoreWritePrefixVisitor',
+	#superclass : 'OSPlatformVisitor',
 	#instVars : [
 		'level'
 	],
-	#category : #MoreLogger
+	#category : 'MoreLogger',
+	#package : 'MoreLogger'
 }
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 MoreWritePrefixVisitor >> prefixFor: aLevel [
 
 	level := aLevel.
 	^ self visit
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 MoreWritePrefixVisitor >> visitGeneric: aPlatform [
 
 	^ ''
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 MoreWritePrefixVisitor >> visitWindows: aPlatform [
 	^ level name, '|'
 ]

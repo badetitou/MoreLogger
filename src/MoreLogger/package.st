@@ -1,1 +1,1 @@
-Package { #name : #MoreLogger }
+Package { #name : 'MoreLogger' }

@@ -1,42 +1,42 @@
-Extension { #name : #Object }
+Extension { #name : 'Object' }
 
-{ #category : #'*MoreLogger' }
+{ #category : '*MoreLogger' }
 Object >> asMoreLog [
 	^ MoreLog logOf: self at: MoreRecordLevel infoLevel
 ]
 
-{ #category : #'*MoreLogger' }
+{ #category : '*MoreLogger' }
 Object >> recordDebug [
 	self recordDebug: self asString
 ]
 
-{ #category : #'*MoreLogger' }
+{ #category : '*MoreLogger' }
 Object >> recordDebug: aString [
 
 	TinyCurrentLogger value recordDebug: aString
 ]
 
-{ #category : #'*MoreLogger' }
+{ #category : '*MoreLogger' }
 Object >> recordError [
 	self recordError: self asString
 ]
 
-{ #category : #'*MoreLogger' }
+{ #category : '*MoreLogger' }
 Object >> recordError: aString [
 	TinyCurrentLogger value recordError: aString
 ]
 
-{ #category : #'*MoreLogger' }
+{ #category : '*MoreLogger' }
 Object >> recordInfo [
 	self recordInfo: self asString
 ]
 
-{ #category : #'*MoreLogger' }
+{ #category : '*MoreLogger' }
 Object >> recordInfo: aString [
 	TinyCurrentLogger value recordInfo: aString
 ]
 
-{ #category : #'*MoreLogger' }
+{ #category : '*MoreLogger' }
 Object >> trace: anObject [
 
 	anObject asString recordInfo

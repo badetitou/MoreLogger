@@ -1,13 +1,14 @@
 Class {
-	#name : #MoreOpenTerminalVisitor,
-	#superclass : #OSPlatformVisitor,
+	#name : 'MoreOpenTerminalVisitor',
+	#superclass : 'OSPlatformVisitor',
 	#instVars : [
 		'moreFileLogger'
 	],
-	#category : #MoreLogger
+	#category : 'MoreLogger',
+	#package : 'MoreLogger'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 MoreOpenTerminalVisitor class >> openTerminalForMoreLogger: aMoreLogger [
 
 	aMoreLogger fileReference ensureCreateFile.
@@ -18,19 +19,19 @@ MoreOpenTerminalVisitor class >> openTerminalForMoreLogger: aMoreLogger [
 		  yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MoreOpenTerminalVisitor >> moreFileLogger [
 
 	^ moreFileLogger
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MoreOpenTerminalVisitor >> moreFileLogger: anObject [
 
 	moreFileLogger := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MoreOpenTerminalVisitor >> visitWindows: aPlatform [
 	LibC runCommand: (String streamContents: [ :stream | 
 			 stream

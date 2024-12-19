@@ -1,16 +1,16 @@
-Extension { #name : #TinyAbstractLogger }
+Extension { #name : 'TinyAbstractLogger' }
 
-{ #category : #'*MoreLogger' }
+{ #category : '*MoreLogger' }
 TinyAbstractLogger >> recordDebug: aString [ 
 	self record: aString
 ]
 
-{ #category : #'*MoreLogger' }
+{ #category : '*MoreLogger' }
 TinyAbstractLogger >> recordError: aString [ 
 	self record: aString
 ]
 
-{ #category : #'*MoreLogger' }
+{ #category : '*MoreLogger' }
 TinyAbstractLogger >> recordInfo: aString [ 
 	self record: aString
 ]

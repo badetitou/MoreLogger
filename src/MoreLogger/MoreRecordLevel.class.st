@@ -2,8 +2,8 @@
 color nil mean no particular color
 "
 Class {
-	#name : #MoreRecordLevel,
-	#superclass : #Object,
+	#name : 'MoreRecordLevel',
+	#superclass : 'Object',
 	#instVars : [
 		'level',
 		'name',
@@ -12,10 +12,11 @@ Class {
 	#classInstVars : [
 		'existingLevels'
 	],
-	#category : #MoreLogger
+	#category : 'MoreLogger',
+	#package : 'MoreLogger'
 }
 
-{ #category : #levels }
+{ #category : 'levels' }
 MoreRecordLevel class >> debugLevel [
 
 	^ existingLevels at: #debug ifAbsentPut: [ 
@@ -26,7 +27,7 @@ MoreRecordLevel class >> debugLevel [
 			  yourself ]
 ]
 
-{ #category : #levels }
+{ #category : 'levels' }
 MoreRecordLevel class >> errorLevel [
 
 	^ existingLevels at: #error ifAbsentPut: [ 
@@ -37,13 +38,13 @@ MoreRecordLevel class >> errorLevel [
 			  yourself ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MoreRecordLevel class >> existingLevels [
 
 	^ existingLevels
 ]
 
-{ #category : #levels }
+{ #category : 'levels' }
 MoreRecordLevel class >> fatalLevel [
 
 	^ existingLevels at: #fatal ifAbsentPut: [ 
@@ -54,7 +55,7 @@ MoreRecordLevel class >> fatalLevel [
 			  yourself ]
 ]
 
-{ #category : #levels }
+{ #category : 'levels' }
 MoreRecordLevel class >> infoLevel [
 
 	^ existingLevels at: #info ifAbsentPut: [ 
@@ -65,7 +66,7 @@ MoreRecordLevel class >> infoLevel [
 			  yourself ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 MoreRecordLevel class >> initialize [
 
 	super initialize.
@@ -75,37 +76,37 @@ MoreRecordLevel class >> initialize [
 		thenDo: [ :method | method valueWithReceiver: self arguments: #(  ) ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MoreRecordLevel >> color [
 
 	^ color
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MoreRecordLevel >> color: anObject [
 
 	color := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MoreRecordLevel >> level [
 
 	^ level
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MoreRecordLevel >> level: anObject [
 
 	level := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MoreRecordLevel >> name [
 
 	^ name
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MoreRecordLevel >> name: anObject [
 
 	name := anObject

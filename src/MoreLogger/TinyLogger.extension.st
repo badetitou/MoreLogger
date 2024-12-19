@@ -1,6 +1,6 @@
-Extension { #name : #TinyLogger }
+Extension { #name : 'TinyLogger' }
 
-{ #category : #'*MoreLogger' }
+{ #category : '*MoreLogger' }
 TinyLogger >> addMoreFileLoggerNamed: aString [
 
 	| moreLogger |
@@ -9,7 +9,7 @@ TinyLogger >> addMoreFileLoggerNamed: aString [
 	^ moreLogger
 ]
 
-{ #category : #'*MoreLogger' }
+{ #category : '*MoreLogger' }
 TinyLogger >> ensureMoreFileLoggerNamed: aString [
 	"Ensure a file logger to a file whose name is given as parameter is in the logger. In case one already exists, does nothing."
 
@@ -18,17 +18,17 @@ TinyLogger >> ensureMoreFileLoggerNamed: aString [
 		ifNone: [ self addMoreFileLoggerNamed: aString ]
 ]
 
-{ #category : #'*MoreLogger' }
+{ #category : '*MoreLogger' }
 TinyLogger >> recordDebug: aString [ 
 	self loggers do: [ :each | each recordDebug: aString ]
 ]
 
-{ #category : #'*MoreLogger' }
+{ #category : '*MoreLogger' }
 TinyLogger >> recordError: aString [ 
 	self loggers do: [ :each | each recordError: aString ]
 ]
 
-{ #category : #'*MoreLogger' }
+{ #category : '*MoreLogger' }
 TinyLogger >> recordInfo: aString [ 
 	self loggers do: [ :each | each recordInfo: aString ]
 ]
