@@ -32,6 +32,15 @@ MoreOpenTerminalVisitor >> moreFileLogger: anObject [
 ]
 
 { #category : 'accessing' }
+MoreOpenTerminalVisitor >> visitMacOS: aPlatform [
+
+	LibC runCommand: (String streamContents: [ :stream |
+			 stream
+				 << 'open ';
+				 << moreFileLogger fileReference pathString ])
+]
+
+{ #category : 'accessing' }
 MoreOpenTerminalVisitor >> visitWindows: aPlatform [
 	LibC runCommand: (String streamContents: [ :stream | 
 			 stream
