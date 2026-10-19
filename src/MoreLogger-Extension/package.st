@@ -1,1 +1,1 @@
-Package { #name : #'MoreLogger-Extension' }
+Package { #name : 'MoreLogger-Extension' }

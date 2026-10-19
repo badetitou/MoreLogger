@@ -1,22 +1,24 @@
 Class {
-	#name : #MorePresenter,
-	#superclass : #SpPresenter,
+	#name : 'MorePresenter',
+	#superclass : 'SpPresenter',
 	#instVars : [
 		'menu',
 		'table',
 		'tinyLogger'
 	],
-	#category : #'MoreLogger-Extension-Manifest'
+	#category : 'MoreLogger-Extension-Manifest',
+	#package : 'MoreLogger-Extension',
+	#tag : 'Manifest'
 }
 
-{ #category : #examples }
+{ #category : 'examples' }
 MorePresenter class >> open [
 	<example>
 	
 	^ self new open
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 MorePresenter class >> worldMenuSectionsOn: aBuilder [
 
 	<worldMenu>
@@ -28,7 +30,7 @@ MorePresenter class >> worldMenuSectionsOn: aBuilder [
 		order: 1000
 ]
 
-{ #category : #layout }
+{ #category : 'layout' }
 MorePresenter >> defaultLayout [
 
 	^ SpBoxLayout newTopToBottom
@@ -37,29 +39,30 @@ MorePresenter >> defaultLayout [
 		  yourself
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 MorePresenter >> initializePresenters [
 
 	tinyLogger := TinyLogger default.
 	menu := SpMenuBarPresenter new
 		        addGroup: [ :group |
-			        group addItem: [ :item |
-					        item
-						        name: nil;
-						        description: 'Create Logger';
-						        icon: (self iconNamed: #add);
-						        action: [
-							        | chosenFile |
-							        chosenFile := UIManager default
-								                      chooseForSaveFileReference:
-									                      'Select log file'
-								                      extensions:
-									                      { 'log' } asOrderedCollection
-								                      path: FileLocator home asPath.
-							        chosenFile ifNotNil: [
-									        tinyLogger ensureMoreFileLoggerNamed:
-											        chosenFile pathString.
-									        self refreshTable ] ] ] ];
+				        group addItem: [ :item |
+							        item
+								        name: nil;
+								        description: 'Create Logger';
+								        icon: (self iconNamed: #add);
+								        action: [
+										        | chosenFile |
+										        chosenFile := UIManager default
+											                      chooseForSaveFileReference:
+												                      'Select log file'
+											                      extensions:
+												                      { 'log' } asOrderedCollection
+											                      path:
+												                      FileLocator home asFileReference.
+										        chosenFile ifNotNil: [
+													        tinyLogger ensureMoreFileLoggerNamed:
+															        chosenFile pathString.
+													        self refreshTable ] ] ] ];
 		        yourself.
 	table := SpTablePresenter new
 		         addColumn: (SpStringTableColumn
@@ -69,23 +72,23 @@ MorePresenter >> initializePresenters [
 			         (SpStringTableColumn
 				          title: 'Path'
 				          evaluated: [ :leafLogger |
-					          (leafLogger isKindOf: TinyFileLogger)
-						          ifTrue: [ leafLogger fileReference pathString ]
-						          ifFalse: [ '' ] ]);
+						          (leafLogger isKindOf: TinyFileLogger)
+							          ifTrue: [ leafLogger fileReference pathString ]
+							          ifFalse: [ '' ] ]);
 		         addColumn:
 			         ((SpDropListTableColumn
 				           title: 'Level'
 				           evaluated: [ :leafLogger |
-					           (leafLogger isKindOf: MoreFileLogger)
-						           ifTrue: [
-							           leafLogger existingLevels values sorted: [ :a :b |
-									           (a level - leafLogger maxLevel) abs
-									           < (b level - leafLogger maxLevel) abs ] ]
-						           ifFalse: [ {  } ] ])
+						           (leafLogger isKindOf: MoreFileLogger)
+							           ifTrue: [
+									           leafLogger existingLevels values sorted: [ :a :b |
+												           (a level - leafLogger maxLevel) abs
+												           < (b level - leafLogger maxLevel) abs ] ]
+							           ifFalse: [ {  } ] ])
 				          display: [ :level |
-					          (level isKindOf: MoreRecordLevel)
-						          ifTrue: [ level name ]
-						          ifFalse: [ 'not available' ] ];
+						          (level isKindOf: MoreRecordLevel)
+							          ifTrue: [ level name ]
+							          ifFalse: [ 'not available' ] ];
 				          selectedItemChangedAction: [ :logger :level |
 					          logger maxLevel: level level ];
 				          yourself);
@@ -93,38 +96,38 @@ MorePresenter >> initializePresenters [
 				          title: 'Clear logs'
 				          evaluated: [ :anObject | 'Clear' ]
 				          action: [ :leafLogger |
-					          (leafLogger isKindOf: TinyFileLogger)
-						          ifTrue: [
-							          leafLogger clearLog.
-							          UIManager default inform: 'Cleared' ]
-						          ifFalse: [
-						          UIManager default alert:
-							          'Only File Logger can be cleared' ] ]);
+						          (leafLogger isKindOf: TinyFileLogger)
+							          ifTrue: [
+									          leafLogger clearLog.
+									          UIManager default inform: 'Cleared' ]
+							          ifFalse: [
+							          UIManager default alert:
+								          'Only File Logger can be cleared' ] ]);
 		         addColumn: (SpLinkTableColumn
 				          title: 'Open'
 				          evaluated: [ :anObject | 'Open' ]
 				          action: [ :leafLogger |
-					          (leafLogger isKindOf: MoreFileLogger)
-						          ifTrue: [ leafLogger open ]
-						          ifFalse: [
-						          UIManager default alert:
-							          'Only More Logger can be openned' ] ]);
+						          (leafLogger isKindOf: MoreFileLogger)
+							          ifTrue: [ leafLogger open ]
+							          ifFalse: [
+							          UIManager default alert:
+								          'Only More Logger can be openned' ] ]);
 		         addColumn: (SpLinkTableColumn
 				          title: 'Remove'
 				          evaluated: [ :anObject | 'Remove' ]
 				          action: [ :leafLogger |
-					          tinyLogger removeLogger: leafLogger.
-					          self refreshTable ]);
+						          tinyLogger removeLogger: leafLogger.
+						          self refreshTable ]);
 		         yourself.
 	self refreshTable
 ]
 
-{ #category : #layout }
+{ #category : 'layout' }
 MorePresenter >> refreshTable [
 	 table items: tinyLogger loggers
 ]
 
-{ #category : #layout }
+{ #category : 'layout' }
 MorePresenter >> title [
 	
 	^ 'Loggers'
